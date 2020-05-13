@@ -11,7 +11,7 @@ Run the Sale.sql under dealretail/dr-db-scripts through MySQL client
 
 Build dr-parent (mvn clean install)
 
-Change the MySQL username/password for Datasouce as per your local setup. https://github.com/dealretail/drl/blob/master/dr/src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml
+Change the MySQL username/password for Datasouce as per your local setup. dr/src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml
 
 Build drl (mvn clean install)
 
