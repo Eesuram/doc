@@ -26,9 +26,6 @@ public class ProductHelper {
 	@Autowired
 	private AdminDAO adminDAO;
 
-	@Autowired
-	private SoupHelper soupHelper;
-
 	public void refreshProducts() {
 		List<CategorySite> categorySites = adminDAO.getCategorySites();
 
@@ -38,92 +35,7 @@ public class ProductHelper {
 
 		productDAO.removeAllProducts();
 		productDAO.resetProductIdIncrementer();
-		refreshProducts(categorySites);
 
-	}
-
-	public void refreshProducts(String catId, String siteId) {
-		List<CategorySite> categorySites = null;
-
-		if (StringUtils.isNotEmpty(catId) && StringUtils.isNotEmpty(siteId)) {
-			categorySites = adminDAO.getCategorySites(Integer.parseInt(catId),
-					Integer.parseInt(siteId));
-			if (CollectionUtils.isEmpty(categorySites)) {
-				return;
-			}
-
-			productDAO.removeProductsByCategorySite(Integer.parseInt(catId),
-					Integer.parseInt(siteId));
-			;
-
-		} else if (StringUtils.isNotEmpty(catId)) {
-			categorySites = adminDAO.getCategorySitesByCategory(Integer
-					.parseInt(catId));
-			if (CollectionUtils.isEmpty(categorySites)) {
-				return;
-			}
-
-			productDAO.removeProductsByCategory(Integer.parseInt(catId));
-			;
-
-		} else if (StringUtils.isNotEmpty(siteId)) {
-			categorySites = adminDAO.getCategorySitesBySite(Integer
-					.parseInt(siteId));
-			if (CollectionUtils.isEmpty(categorySites)) {
-				return;
-			}
-
-			productDAO.removeProductsBySite(Integer.parseInt(siteId));
-			;
-
-		} else {
-			return;
-		}
-
-		refreshProducts(categorySites);
-	}
-
-	private void refreshProducts(List<CategorySite> categorySites) {
-
-		for (CategorySite categorySite : categorySites) {
-			log.info("Processing Category browse link :: "
-					+ categorySite.getBrowseLink());
-
-			updateProducts(categorySite, categorySite.getBrowseLink());
-
-			if (StringUtils.isNotEmpty(categorySite.getPaginationUrl())) {
-				int itemCount = soupHelper.getItemCount(
-						categorySite.getBrowseLink(),
-						categorySite.getItemCountKeyword());
-
-				if (itemCount > 0 && categorySite.getItemsPerPage() > 0) {
-					int noOfPages = itemCount / categorySite.getItemsPerPage();
-					if (itemCount % categorySite.getItemsPerPage() > 0) {
-						noOfPages++;
-					}
-
-					for (int pageIndex = 2; pageIndex <= noOfPages; pageIndex++) {
-						String url = categorySite.getPaginationUrl();
-						url = url.replace("{0}", pageIndex + "");
-
-						updateProducts(categorySite, url);
-					}
-				}
-			}
-		}
-	}
-
-	public void updateProducts(CategorySite categorySite, String url) {
-		List<Product> products = soupHelper.getProducts(categorySite, url);
-
-		if (CollectionUtils.isNotEmpty(products)) {
-			log.info("Processed URL :: " + url + " --- No. of Products :: "
-					+ products.size());
-
-			productDAO.updateProducts(products);
-		} else {
-			log.info("Processed URL :: " + url + " --- No products updated");
-		}
 	}
 
 	public List<Product> getProductsByCategory(String categoryId) {
