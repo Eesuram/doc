@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+ 
+<tiles-definitions>
+ 
+<definition name="baseLayout" template="/WEB-INF/jsp/tiles/baseLayout.jsp">
+<put-attribute name="title"  value="Template"/>
+<put-attribute name="header" value="/WEB-INF/jsp/tiles/header.jsp"/>
+<put-attribute name="navigation"   value="/WEB-INF/jsp/tiles/navigation.jsp"/>
+<put-attribute name="breadCrumb" value="/WEB-INF/jsp/tiles/breadCrumb.jsp"/>
+<put-attribute name="css"  		value="/WEB-INF/jsp/tiles/css.jsp" />
+<put-attribute name="script" value="/WEB-INF/jsp/tiles/base_script.jsp"/>
+<put-attribute name="feeds"   value="/WEB-INF/jsp/tiles/feeds.jsp"/>
+<put-attribute name="footer"   value="/WEB-INF/jsp/tiles/footer.jsp"/>
+
+</definition>
+ 
+<definition name="welcome" extends="baseLayout">
+<put-attribute name="title"  value="D on C :: Categories"/>
+<put-attribute name="body"   value="/WEB-INF/jsp/welcome.jsp"/>     
+</definition>
+ 
+<definition name="login" extends="baseLayout">
+<put-attribute name="title"  value="D on C :: Login"/>
+<put-attribute name="body"   value="/WEB-INF/jsp/user/login.jsp"/>     
+</definition>
+
+<definition name="profile" extends="baseLayout">
+<put-attribute name="title"  value="D on C :: Register or Update User"/>
+<put-attribute name="body"   value="/WEB-INF/jsp/user/profile.jsp"/>     
+</definition>
+
+<definition name="myaccount" extends="baseLayout">
+<put-attribute name="title"  value="D on C :: User Account Summary"/>
+<put-attribute name="body"   value="/WEB-INF/jsp/user/myAccount.jsp"/>     
+</definition>
+
+<definition name="managesites" extends="baseLayout">
+<put-attribute name="title"  value="D on C :: Manage Site Info"/>
+<put-attribute name="body"   value="/WEB-INF/jsp/admin/manageSites.jsp"/>     
+</definition>
+
+<definition name="managecategories" extends="baseLayout">
+<put-attribute name="title"  value="D on C :: Manage Category Info"/>
+<put-attribute name="body"   value="/WEB-INF/jsp/admin/manageCategories.jsp"/>     
+</definition>
+
+<definition name="managecss" extends="baseLayout">
+<put-attribute name="title"  value="D on C :: Manage Category Site Config"/>
+<put-attribute name="body"   value="/WEB-INF/jsp/admin/manageCss.jsp"/>     
+</definition>
+
+<definition name="refreshproducts" extends="baseLayout">
+<put-attribute name="title"  value="D on C :: Referesh Product Info"/>
+<put-attribute name="body"   value="/WEB-INF/jsp/admin/refreshProducts.jsp"/>     
+</definition>
+
+</tiles-definitions>
