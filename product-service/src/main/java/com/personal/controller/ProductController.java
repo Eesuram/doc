@@ -1,5 +1,6 @@
 package com.personal.controller;
 
+import com.personal.common.ApplicationData;
 import com.personal.common.Constants;
 import com.personal.entity.Product;
 import com.personal.helper.ProductHelper;
@@ -25,8 +26,8 @@ public class ProductController {
     @Autowired
     private ProductHelper productHelper;
 
-    @Resource(name = "discountMap")
-    private Map<String, String> discountMap;
+    @Autowired
+    private ApplicationData applicationData;
 
     @GetMapping
     public ProductResponse defaultPage(@RequestBody FilterCriteria filterCriteria, HttpServletRequest request) {
@@ -88,5 +89,10 @@ public class ProductController {
         FilterCriteria filterCriteria = new FilterCriteria();
         filterCriteria.setSavings(savings);
         return productHelper.getProductsByFilterCriteria(filterCriteria);
+    }
+
+    @GetMapping(value = "/appdata")
+    public ApplicationData getAppData() {
+        return applicationData;
     }
 }

@@ -15,7 +15,11 @@ Run the Spring-boot application
     - Run Applicaiton.java from IDE
     - mvn spring-boot:run from CLI
 
-Access from Postman:   GET: http://localhost:8082/doc/products
+Access from Postman:   
+
+GET: http://localhost:8082/doc/products/appdata
+
+GET: http://localhost:8082/doc/products
 
 Sample Request:
 {
@@ -25,3 +29,12 @@ Sample Request:
 	"sortBy": "price",
 	"searchKey": "Guess"
 }
+
+POST: http://localhost:8082/doc/user/signin
+
+Sample Request:
+{
+	"userName": "test@doc.com",
+	"password": "test123"
+}
+ 

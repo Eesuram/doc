@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Spring-Boot startup class to run the application
@@ -19,8 +19,8 @@ public class Application {
     }
 
     @Bean
-    public Map<String, String> discountMap() {
-        return new HashMap<String, String>() {
+    public Map<String, String> discounts() {
+        return new TreeMap<String, String>() {
             {
                 put("20", ">= 20%");
                 put("40", ">= 40%");
@@ -32,4 +32,18 @@ public class Application {
             }
         };
     }
+
+    @Bean
+    public Map<String, String> priceRanges() {
+        return new TreeMap<String, String>() {
+            {
+                put("0-100", "<= $100");
+                put("0-200", "<= $200");
+                put("0-300", "<= $300");
+                put("0-400", "<= $400");
+                put("0-500", "<= $500");
+            }
+        };
+    }
+
 }
