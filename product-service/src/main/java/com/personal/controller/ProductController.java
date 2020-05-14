@@ -1,15 +1,10 @@
 package com.personal.controller;
 
-import com.personal.common.ApplicationData;
 import com.personal.common.Constants;
-import com.personal.entity.Category;
 import com.personal.entity.Product;
 import com.personal.helper.ProductHelper;
 import com.personal.model.FilterCriteria;
 import com.personal.model.ProductResponse;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +18,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
-public class WelcomeController {
+public class ProductController {
 
-    Log log = LogFactory.getLog(WelcomeController.class);
+    Log log = LogFactory.getLog(ProductController.class);
 
     @Autowired
     private ProductHelper productHelper;
