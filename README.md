@@ -17,9 +17,11 @@ Run the Spring-boot application
 
 Access from Postman:   
 
-GET: http://localhost:8082/doc/products/appdata
+GET: http://localhost:8082/doc/appdata
 
 GET: http://localhost:8082/doc/products
+
+POST: http://localhost:8082/doc/products
 
 Sample Request:
 {
@@ -30,11 +32,7 @@ Sample Request:
 	"searchKey": "Guess"
 }
 
-POST: http://localhost:8082/doc/user/signin
+GET: http://localhost:8082/doc/login
 
-Sample Request:
-{
-	"userName": "test@doc.com",
-	"password": "test123"
-}
+GET: http://localhost:8082/doc/logout
  
