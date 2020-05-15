@@ -1,15 +1,13 @@
 package com.personal.model;
 
 import com.personal.entity.Product;
-import com.personal.entity.User;
 
 import java.util.List;
 
-public class ProductResponse extends BaseBean {
+public class ProductResponse {
 
 	private List<Product> products;
 	private FilterCriteria filterCriteria;
-	private User user;
 	private int currentPage;
 	private int productCount;
 
@@ -27,14 +25,6 @@ public class ProductResponse extends BaseBean {
 
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	/**

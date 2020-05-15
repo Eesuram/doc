@@ -1,7 +1,6 @@
 package com.personal.controller;
 
 import com.personal.common.ApplicationData;
-import com.personal.common.Constants;
 import com.personal.entity.Product;
 import com.personal.helper.ProductHelper;
 import com.personal.model.FilterCriteria;
@@ -11,11 +10,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
@@ -30,15 +27,15 @@ public class ProductController {
     private ApplicationData applicationData;
 
     @GetMapping
-    public ProductResponse defaultPage(@RequestBody FilterCriteria filterCriteria, HttpServletRequest request) {
-        ProductResponse response = new ProductResponse();
+    public ProductResponse getProducts(HttpServletRequest request) {
+        return getProductResponse(request, new FilterCriteria());
+    }
 
+    private ProductResponse getProductResponse(HttpServletRequest request, FilterCriteria filterCriteria) {
+        ProductResponse response = new ProductResponse();
         try {
             HttpSession session = request.getSession(false);
-            if (null != session && null != session.getAttribute(Constants.USER_INFO)) {
-                response.setSignedIn(true);
-            } else {
-                response.setSignedIn(false);
+            if (null == session) {
                 filterCriteria.setSavings("40");
             }
 
@@ -61,8 +58,12 @@ public class ProductController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return response;
+    }
+
+    @PostMapping
+    public ProductResponse getProductsByCriteria(@RequestBody FilterCriteria filterCriteria, HttpServletRequest request) {
+        return getProductResponse(request, filterCriteria);
     }
 
     @PostMapping(value = "/category/{categoryId}")
@@ -95,4 +96,5 @@ public class ProductController {
     public ApplicationData getAppData() {
         return applicationData;
     }
+
 }
