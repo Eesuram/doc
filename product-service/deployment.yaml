@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doc-prod-srv
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: doc-prod-srv
+  template:
+    metadata:
+      labels:
+        app: doc-prod-srv
+    spec:
+      containers:
+        - image: azdemocreg.azurecr.io/doc/product-service:v1
+          name: product-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: doc-prod-srv
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8082
+  selector:
+    app: doc-prod-srv
