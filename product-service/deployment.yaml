@@ -15,6 +15,9 @@ spec:
       containers:
         - image: azdemocreg.azurecr.io/doc/product-service:v1
           name: product-service
+          env:
+            - name: SPRING_PROFILE
+              value: az
 ---
 apiVersion: v1
 kind: Service
