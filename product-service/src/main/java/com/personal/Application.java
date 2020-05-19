@@ -3,7 +3,12 @@ package com.personal;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -45,5 +50,30 @@ public class Application {
             }
         };
     }
+
+    /**
+     * Added cors configuration to support requests from cross origins.
+     *
+     * @param request - the http servlet request
+     * @return - CorsConfigurationSource
+     */
+    @Primary
+    @Bean
+    public CorsConfigurationSource corsConfiguration(HttpServletRequest request) {
+        return new CorsConfigurationSource() {
+            @Override
+            public CorsConfiguration getCorsConfiguration(HttpServletRequest httpServletRequest) {
+                CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+                corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
+                corsConfiguration.setAllowCredentials(true);
+                corsConfiguration.setAllowedHeaders(Arrays.asList("Content-Type", "Accept", "Authorization"));
+                corsConfiguration.setAllowedMethods(Arrays.asList("GET", "PUT", "OPTIONS", "POST", "HEAD", "DELETE"));
+
+                return corsConfiguration;
+            }
+        };
+    }
+
 
 }

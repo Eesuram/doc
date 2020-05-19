@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: doc-prod-srv-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  tls:
+    - hosts:
+        - doc-prod-srv-ingress-ps.eastus.cloudapp.azure.com
+      secretName: tls-secret
+  rules:
+    - host: doc-prod-srv-ingress-ps.eastus.cloudapp.azure.com
+      http:
+        paths:
+          - backend:
+              serviceName: doc-prod-srv
+              servicePort: 8082
+            path: /(.*)
