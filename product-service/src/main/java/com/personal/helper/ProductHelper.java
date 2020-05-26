@@ -1,27 +1,23 @@
 package com.personal.helper;
 
+import com.microsoft.applicationinsights.TelemetryClient;
 import com.personal.entity.Product;
 import com.personal.model.FilterCriteria;
 import com.personal.repository.ProductRepository;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 @Component
 public class ProductHelper {
-
-    Log log = LogFactory.getLog(ProductHelper.class);
 
     @Autowired
     private ProductRepository productRepository;

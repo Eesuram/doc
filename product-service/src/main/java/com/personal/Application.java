@@ -1,5 +1,7 @@
 package com.personal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +21,9 @@ import java.util.TreeMap;
  */
 @SpringBootApplication
 public class Application {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Application.class);
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
@@ -63,11 +68,12 @@ public class Application {
         return new CorsConfigurationSource() {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest httpServletRequest) {
+                LOG.info("Enabled CORS for all Origins, Methods and Headers");
                 CorsConfiguration corsConfiguration = new CorsConfiguration();
 
                 corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
                 corsConfiguration.setAllowCredentials(true);
-                corsConfiguration.setAllowedHeaders(Arrays.asList("Content-Type", "Accept", "Authorization"));
+                corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
                 corsConfiguration.setAllowedMethods(Arrays.asList("GET", "PUT", "OPTIONS", "POST", "HEAD", "DELETE"));
 
                 return corsConfiguration;

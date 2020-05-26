@@ -13,7 +13,7 @@ spec:
         app: doc-prod-srv
     spec:
       containers:
-        - image: azdemocreg.azurecr.io/doc/product-service:v1
+        - image: azdemocreg.azurecr.io/doc/product-service:v7
           name: product-service
           env:
             - name: SPRING_PROFILE
@@ -25,7 +25,7 @@ metadata:
   name: doc-prod-srv
 spec:
   type: LoadBalancer
-  ports:
-    - port: 8082
   selector:
     app: doc-prod-srv
+  ports:
+    - port: 8082
