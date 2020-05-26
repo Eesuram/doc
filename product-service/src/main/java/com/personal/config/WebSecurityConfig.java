@@ -1,6 +1,8 @@
 package com.personal.config;
 
 import com.microsoft.azure.spring.autoconfigure.b2c.AADB2COidcLoginConfigurer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +11,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private static final Logger LOG = LoggerFactory.getLogger(WebSecurityConfig.class);
 
     private final AADB2COidcLoginConfigurer configurer;
 
@@ -21,9 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        LOG.info("START: Configure Azure AD B2C Websecurity");
         http
-                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/doc/**").hasAnyRole()
                 .and()
@@ -32,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().configurationSource(corsConfiguration)
                 .and()
                 .apply(configurer);
-
+        LOG.info("END: Configure Azure AD B2C Websecurity");
     }
 
 }

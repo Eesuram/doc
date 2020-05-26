@@ -2,11 +2,12 @@ package com.personal.controller;
 
 import com.personal.common.ApplicationData;
 import com.personal.entity.Product;
+import com.personal.helper.MetricsTracker;
 import com.personal.helper.ProductHelper;
 import com.personal.model.FilterCriteria;
 import com.personal.model.ProductResponse;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    Log log = LogFactory.getLog(ProductController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
     private ProductHelper productHelper;
@@ -26,8 +27,13 @@ public class ProductController {
     @Autowired
     private ApplicationData applicationData;
 
+    @Autowired
+    MetricsTracker tracker;
+
     @GetMapping
     public ProductResponse getProducts(HttpServletRequest request) {
+        LOG.info("--> Invoke GET products call");
+        tracker.trackEvent(request.getRequestURI()).trackSQLDependency();
         return getProductResponse(request, new FilterCriteria());
     }
 
@@ -41,9 +47,7 @@ public class ProductController {
 
             response.setCurrentPage(filterCriteria.getPageIndex() + 1);
 
-            if (log.isDebugEnabled()) {
-                log.debug("START :: Open the welcome page with Search Criteria :: " + filterCriteria);
-            }
+            LOG.info("The search criteria :: {}", filterCriteria);
 
             List<Product> products = productHelper.getProductsByFilterCriteria(filterCriteria);
             response.setProductCount(productHelper.getProductCount(filterCriteria));
@@ -51,18 +55,18 @@ public class ProductController {
             response.setProducts(products);
             response.setFilterCriteria(filterCriteria);
 
-            if (log.isDebugEnabled()) {
-                log.debug("END :: No. of Products :: " + products.size());
-            }
+            LOG.info("No. of Products :: {}", products.size());
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Error occurred on product retrieval", e);
         }
         return response;
     }
 
     @PostMapping
     public ProductResponse getProductsByCriteria(@RequestBody FilterCriteria filterCriteria, HttpServletRequest request) {
+        LOG.info("--> POST: Invoke get products by search criteria");
+        tracker.trackEvent(request.getRequestURI()).trackSQLDependency();
         return getProductResponse(request, filterCriteria);
     }
 
