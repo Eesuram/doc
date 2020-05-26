@@ -1,5 +1,4 @@
 package com.personal.config;
-
 import com.microsoft.azure.spring.autoconfigure.b2c.AADB2COidcLoginConfigurer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +26,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         LOG.info("START: Configure Azure AD B2C Websecurity");
         http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/doc/**").hasAnyRole()
                 .and()
-                .sessionManagement().invalidSessionStrategy(((request, response) -> response.sendRedirect("/doc/login")))
-                .and()
+                //.sessionManagement().invalidSessionStrategy(((request, response) -> response.sendRedirect("/doc/login")))
+                //.and()
                 .cors().configurationSource(corsConfiguration)
                 .and()
                 .apply(configurer);

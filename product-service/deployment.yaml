@@ -13,7 +13,7 @@ spec:
         app: doc-prod-srv
     spec:
       containers:
-        - image: azdemocreg.azurecr.io/doc/product-service:v4
+        - image: azdemocreg.azurecr.io/doc/product-service:v7
           name: product-service
           env:
             - name: SPRING_PROFILE
